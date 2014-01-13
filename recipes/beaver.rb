@@ -70,6 +70,7 @@ end
 
 python_pip node['logstash']['beaver']['pip_package'] do
   action :install
+  options '--allow-external'
 end
 
 # inputs
