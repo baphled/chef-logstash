@@ -240,3 +240,21 @@ logrotate_app 'logstash_server' do
   options node['logstash']['server']['logrotate']['options']
   create "664 #{node['logstash']['user']} #{node['logstash']['group']}"
 end
+
+# find kibana web interface users from the defined data bag
+user_databag = node['logstash']['users_databag'].to_sym
+begin
+  users = search(user_databag, "NOT action:remove")
+rescue Net::HTTPServerException
+  Chef::Log.fatal("Could not find appropriate items in the \"#{node['logstash']['users_databag']}\" databag.  Check to make sure the databag exists")
+  raise 'Could not find appropriate items in the "users" databag.  Check to make sure there is a users databag'
+end
+
+directory "/etc/nginx"
+template "/etc/nginx/htpasswd" do
+  source 'htpasswd.users.erb'
+  mode 00640
+  owner node['logstash']['user']
+  group node['logstash']['group']
+  variables(:users => users)
+end

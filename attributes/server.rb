@@ -37,3 +37,5 @@ default['logstash']['server']['web']['address'] = '0.0.0.0'
 default['logstash']['server']['web']['port']    = '9292'
 
 default['logstash']['server']['logrotate']['options'] = %w{ missingok notifempty compress copytruncate }
+
+default['logstash']['users_databag'] = 'users'
