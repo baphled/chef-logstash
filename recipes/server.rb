@@ -253,8 +253,7 @@ end
 directory "/etc/nginx"
 template "/etc/nginx/htpasswd" do
   source 'htpasswd.users.erb'
-  mode 00640
+  mode 00644
   owner node['logstash']['user']
-  group 'nginx'
   variables(:users => users)
 end
