@@ -3,6 +3,10 @@
 <%= key %>: <%= value %>
 <% end -%>
 
+logstash_version: 0
+refresh_worker_process: 86400
+queue_timeout: 43200
+
 <% @files.each do |file| -%>
 <%   file['path'].each do |path| -%>
 [<%= path %>]
